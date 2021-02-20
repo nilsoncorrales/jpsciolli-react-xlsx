@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { convertSheetToJson, readFileExcel } from "./service/sheet";
-import "./App.css";
+// import "./App.css";
 
 const App = () => {
   const [file, changeFile] = useState({ data: [] });

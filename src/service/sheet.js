@@ -6,23 +6,19 @@ const readFileExcel = (event) => {
     return;
   }
   const reader = new FileReader();
-  // reader.onload = convertSheetToJson;
   reader.readAsArrayBuffer(file);
   return reader;
 };
 
 const convertSheetToJson = async (e) => {
   const { result } = e.target;
-  console.info("e.target ", e.target);
 
   const workbook = new ExcelJS.Workbook();
   await workbook.xlsx.load(result);
-  //   console.info("workbook ", workbook);
 
   let worksheets = [];
 
   workbook.eachSheet((worksheet) => {
-    // const {worksheets, } = worksheet
     let rows = [];
     // console.info("worksheet ", worksheet, worksheet.rowCount);
     worksheet.eachRow((row, index) => {
