@@ -12,7 +12,7 @@ const App = () => {
   }
 
   const handleChange = (event) => {
-    // console.log("handleChange ", event);
+    console.log("handleChange ", event);
 
     const reader = readFileExcel(event)
     reader.addEventListener("loadend", async (e) => {
