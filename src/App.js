@@ -13,11 +13,9 @@ const App = () => {
 
   const handleChange = (event) => {
 
-    
-    
     console.log("handleChange ", event);
 
-    const reader = readFileExcel(event)
+    const reader = readFileExcel(event);
     reader.addEventListener("loadend", async (e) => {
       const data = await convertSheetToJson(e)
       console.log("readFile ", data)
