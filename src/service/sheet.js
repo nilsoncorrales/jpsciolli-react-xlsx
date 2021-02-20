@@ -1,30 +1,30 @@
-import * as ExcelJS from "exceljs";
+import * as ExcelJS from "exceljs"
 
 const readFileExcel = (event) => {
-  const file = event.target.files[0];
+  const file = event.target.files[0]
   if (!file) {
-    return;
+    return
   }
-  const reader = new FileReader();
-  reader.readAsArrayBuffer(file);
-  return reader;
-};
+  const reader = new FileReader()
+  reader.readAsArrayBuffer(file)
+  return reader
+}
 
 const convertSheetToJson = async (e) => {
-  const { result } = e.target;
+  const { result } = e.target
 
-  const workbook = new ExcelJS.Workbook();
-  await workbook.xlsx.load(result);
+  const workbook = new ExcelJS.Workbook()
+  await workbook.xlsx.load(result)
 
-  let worksheets = [];
+  let worksheets = []
 
   workbook.eachSheet((worksheet) => {
-    let rows = [];
+    let rows = []
     // console.info("worksheet ", worksheet, worksheet.rowCount);
     worksheet.eachRow((row, index) => {
-        console.info("row ", row, row.cellCount, index);
+      console.info("row ", row, row.cellCount, index)
       if (index === 1) {
-        return;
+        return
       }
       const content = {
         id: getValue(row.getCell(1)),
@@ -35,18 +35,18 @@ const convertSheetToJson = async (e) => {
         page: getValue(row.getCell(6)),
         titular: getValue(row.getCell(7)),
         link: getValue(row.getCell(8)),
-      };
-      rows = [...rows, content];
-    });
-    worksheets = [...worksheets, rows];
-  });
-  console.info("worksheets ", worksheets);
+      }
+      rows = [...rows, content]
+    })
+    worksheets = [...worksheets, rows]
+  })
+  console.info("worksheets ", worksheets)
 
-  return worksheets;
-};
+  return worksheets
+}
 
 const getValue = (cell) => {
-  return cell.value?.hyperlink || cell.value || "";
-};
+  return cell.value?.hyperlink || cell.value || ""
+}
 
-export { readFileExcel, convertSheetToJson };
+export { readFileExcel, convertSheetToJson }

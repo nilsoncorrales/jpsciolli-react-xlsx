@@ -1,37 +1,30 @@
-import { useState } from "react";
-import { convertSheetToJson, readFileExcel } from "./service/sheet";
-// import "./App.css";
+import { useState } from "react"
+import { convertSheetToJson, readFileExcel } from "./service/sheet"
+import "./App.css"
 
 const App = () => {
-  const [file, changeFile] = useState({ data: [] });
+  const [file, changeFile] = useState({ data: [] })
 
-  const acceptFile = `.xlsx,.csv`;
+  const acceptFile = `.xlsx,.csv`
 
   const handleClick = () => {
-    console.log("handleClick");
-  };
+    console.log("handleClick")
+  }
 
   const handleChange = (event) => {
     // console.log("handleChange ", event);
 
-    const reader = readFileExcel(event);
+    const reader = readFileExcel(event)
     reader.addEventListener("loadend", async (e) => {
-      const data = await convertSheetToJson(e);
-      console.log("readFile ", data);
-      changeFile({ data });
-    });
-  };
+      const data = await convertSheetToJson(e)
+      console.log("readFile ", data)
+      changeFile({ data })
+    })
+  }
 
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
-
-      <input
-        type="file"
-        name="file"
-        accept={acceptFile}
-        onChange={handleChange}
-      />
+      <input type="file" name="file" accept={acceptFile} onChange={handleChange} />
       <button onClick={handleClick}>Read file</button>
       <br />
 
@@ -50,7 +43,7 @@ const App = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
