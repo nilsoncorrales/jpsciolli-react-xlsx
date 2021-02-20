@@ -7,9 +7,6 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "exceljs": "^4.2.0",
-    "husky": "^5.0.9",
-    "lint-staged": "^10.5.4",
-    "prettier": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.2",
@@ -20,14 +17,14 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
+    "lint": "eslint --fix .",
     "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\""
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:prettier/recommended"
     ]
   },
   "browserslist": {
@@ -47,15 +44,19 @@
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-react": "^7.22.0"
-  },
-  "lint-staged": {
-    "*.+(js|jsx)": "eslint --fix",
-    "*.+(json|css|md)": "prettier --write"
+    "eslint-plugin-react": "^7.22.0",
+    "husky": "^5.0.9",
+    "lint-staged": "^10.5.4",
+    "minireset.css": "^0.0.7",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
   }
 }
