@@ -19,7 +19,7 @@ const List = ({ data }) => (
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                Link {index + 1}
+                Enlace
               </a>
             </li>
           ))}

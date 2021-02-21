@@ -34,7 +34,6 @@ const convertSheetToJson = async (e) => {
 
   workbook.eachSheet((worksheet) => {
     let urls = []
-    console.info("worksheet ", worksheet, worksheet.rowCount)
     const { name } = worksheet
 
     worksheet.eachRow((row, index) => {
@@ -47,7 +46,7 @@ const convertSheetToJson = async (e) => {
     })
     worksheets = [...worksheets, { name, urls }]
   })
-  console.info("worksheets ", worksheets)
+  // console.info("worksheets ", worksheets)
 
   return worksheets
 }

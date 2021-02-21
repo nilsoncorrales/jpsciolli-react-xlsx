@@ -42,7 +42,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Heading title="Subida de archivos" subtitle="Extensión válida: .xlsx" />
+      <Heading title="Subida de Excel" subtitle="Extensión válida: .xlsx" />
       <input
         id="inputFile"
         style={{ display: "none" }}
@@ -51,7 +51,7 @@ const App = () => {
         accept={acceptFile}
         onChange={handleChange}
       />
-      <Button type="primary" onClick={handleClick} text="Leer archivo" />
+      <Button type="primary" onClick={handleClick} text="Subir archivo" />
       <br />
 
       {file && <List data={file.data} />}

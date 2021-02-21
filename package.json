@@ -15,11 +15,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "prebuild": "yarn lint",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --fix .",
+    "dev": "serve -s build",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "format": "prettier --write \"**/*.+(js|jsx|json|yml|yaml|css|md|vue)\""
   },
   "eslintConfig": {
@@ -50,7 +51,8 @@
     "husky": "^5.0.9",
     "lint-staged": "^10.5.4",
     "minireset.css": "^0.0.7",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "serve": "^11.3.2"
   },
   "husky": {
     "hooks": {
