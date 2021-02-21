@@ -1,10 +1,20 @@
 import * as ExcelJS from "exceljs"
 
+// let FILE = ""
+let IS_TYPE_XLSX = ""
+
+const getTypeFile = (extension) => {
+  return extension.includes(".xlsx")
+}
+
 const readFileExcel = (event) => {
   const file = event.target.files[0]
   if (!file) {
     return
   }
+
+  IS_TYPE_XLSX = getTypeFile(file.type)
+
   const reader = new FileReader()
   reader.readAsArrayBuffer(file)
   return reader
@@ -14,31 +24,28 @@ const convertSheetToJson = async (e) => {
   const { result } = e.target
 
   const workbook = new ExcelJS.Workbook()
+
+  if (!IS_TYPE_XLSX) {
+    return
+  }
   await workbook.xlsx.load(result)
 
   let worksheets = []
 
   workbook.eachSheet((worksheet) => {
-    let rows = []
-    // console.info("worksheet ", worksheet, worksheet.rowCount);
+    let urls = []
+    console.info("worksheet ", worksheet, worksheet.rowCount)
+    const { name } = worksheet
+
     worksheet.eachRow((row, index) => {
-      console.info("row ", row, row.cellCount, index)
+      // console.info("row ", row, row.cellCount, index)
       if (index === 1) {
         return
       }
-      const content = {
-        id: getValue(row.getCell(1)),
-        medio: getValue(row.getCell(2)),
-        date: getValue(row.getCell(3)),
-        nombre: getValue(row.getCell(4)),
-        section: getValue(row.getCell(5)),
-        page: getValue(row.getCell(6)),
-        titular: getValue(row.getCell(7)),
-        link: getValue(row.getCell(8)),
-      }
-      rows = [...rows, content]
+      const link = getValue(row.getCell(8))
+      urls = [...urls, link]
     })
-    worksheets = [...worksheets, rows]
+    worksheets = [...worksheets, { name, urls }]
   })
   console.info("worksheets ", worksheets)
 

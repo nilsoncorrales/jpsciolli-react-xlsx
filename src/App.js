@@ -1,56 +1,60 @@
 import { useState } from "react"
-import { convertSheetToJson, readFileExcel } from "./service/sheet"
 import "./App.css"
+import { Button, Heading, List } from "./components"
+
+import { convertSheetToJson, readFileExcel } from "./service"
 
 const App = () => {
   const [file, changeFile] = useState({ data: [] })
 
-  const acceptFile = `.xlsx,.csv`
+  const acceptFile = `.xlsx`
 
   const handleClick = () => {
-    console.log("handleClick")
+    // console.log("handleClick", e)
+    const inputFile = document.querySelector("#inputFile")
+    inputFile.click()
+    inputFile.onChange = () => {
+      handleChange()
+    }
   }
 
-  
   const handleChange = (event) => {
-  
+    // console.log("handleChange ", event)
+    if (!event) {
+      return
+    }
 
+    const reader = readFileExcel(event)
+    if (!reader) {
+      return
+    }
 
-   
-
-    
-    console.log("handleChange ", event);
-
-
- 
-    const reader = readFileExcel(event);
     reader.addEventListener("loadend", async (e) => {
+      if (!e) {
+        return
+      }
+      console.log("handleChange ", e)
       const data = await convertSheetToJson(e)
-      console.log("readFile ", data)
+      // console.log("readFile ", data)
       changeFile({ data })
     })
   }
 
   return (
     <div className="App">
-      <input type="file" name="file" accept={acceptFile} onChange={handleChange} />
-      <button onClick={handleClick}>Read file</button>
+      <Heading title="Subida de archivos" subtitle="Extensión válida: .xlsx" />
+      <input
+        id="inputFile"
+        style={{ display: "none" }}
+        type="file"
+        name="file"
+        accept={acceptFile}
+        onChange={handleChange}
+      />
+      <Button type="primary" onClick={handleClick} text="Leer archivo" />
       <br />
 
-      {file && (
-        <div>
-          <h3>Data</h3>
-          {file.data.map((sheet) =>
-            sheet.map(({ id, page, titular, link }) => (
-              <div key={id}>
-                <p>{titular}</p>
-                <p>Pagina: {page}</p>
-                <a href={link}>{link}</a>
-              </div>
-            ))
-          )}
-        </div>
-      )}
+      {file && <List data={file.data} />}
     </div>
   )
 }

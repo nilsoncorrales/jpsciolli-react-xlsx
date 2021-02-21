@@ -1,0 +1,10 @@
+.heading {
+  padding: 20px 0;
+}
+.title {
+  font-size: var(--font-size-3xl);
+  font-weight: 600;
+}
+.subtitle {
+  font-size: var(--font-size-xs);
+}
