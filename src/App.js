@@ -33,9 +33,12 @@ const App = () => {
       if (!e) {
         return
       }
-      console.log("handleChange ", e)
+      // console.log("handleChange ", e)
       const data = await convertSheetToJson(e)
-      // console.log("readFile ", data)
+      console.log("readFile ", data)
+      if (!data) {
+        return
+      }
       changeFile({ data })
     })
   }

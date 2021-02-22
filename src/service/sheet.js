@@ -25,9 +25,11 @@ const convertSheetToJson = async (e) => {
 
   const workbook = new ExcelJS.Workbook()
 
-  if (!IS_TYPE_XLSX) {
-    return
+  console.info("IS_TYPE_XLSX ", IS_TYPE_XLSX)
+  if (IS_TYPE_XLSX === false) {
+    return ""
   }
+
   await workbook.xlsx.load(result)
 
   let worksheets = []
