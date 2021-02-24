@@ -4,7 +4,6 @@ import * as ExcelJS from "exceljs"
 let IS_TYPE_XLSX = ""
 
 const getTypeFile = (extension) => {
-  console.log(extension)
   return extension.includes(".xlsx")
 }
 
@@ -14,7 +13,8 @@ const readFileExcel = (event) => {
     return
   }
 
-  IS_TYPE_XLSX = getTypeFile(file.type)
+  console.log("file ", file)
+  IS_TYPE_XLSX = getTypeFile(file.name)
 
   const reader = new FileReader()
   reader.readAsArrayBuffer(file)
