@@ -3,17 +3,16 @@ import * as ExcelJS from "exceljs"
 // let FILE = ""
 let IS_TYPE_XLSX = ""
 
-const getTypeFile = (extension) => {
+export const getTypeFile = (extension) => {
   return extension.includes(".xlsx")
 }
 
-const readFileExcel = (event) => {
-  const file = event.target.files[0]
+const readFileExcel = (file) => {
   if (!file) {
     return
   }
 
-  console.log("file ", file)
+  // console.log("file ", file)
   IS_TYPE_XLSX = getTypeFile(file.name)
 
   const reader = new FileReader()
@@ -26,7 +25,7 @@ const convertSheetToJson = async (e) => {
 
   const workbook = new ExcelJS.Workbook()
 
-  console.info("IS_TYPE_XLSX ", IS_TYPE_XLSX)
+  // console.info("IS_TYPE_XLSX ", IS_TYPE_XLSX)
   if (IS_TYPE_XLSX === false) {
     return ""
   }

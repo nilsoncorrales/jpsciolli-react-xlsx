@@ -6,7 +6,7 @@ import "./List.css"
 const List = ({ data }) => (
   <section className="list">
     {data.map(({ name, urls }) => (
-      <article className="content" key={name}>
+      <article className="content" key={`${name}${Math.random()}`}>
         <h3 className="list-title">{name}</h3>
         <ul className="list-group">
           {urls.map((link, index) => (

@@ -1,9 +1,12 @@
 .DragDropFile {
-  border: 3px dotted #727272;
-  height: 300px;
-  width: 80%;
+  border: 3px dotted var(--color-primary);
+  height: 200px;
+  width: 60%;
   margin: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--color-primary);
+  font-family: var(--font-family-sans);
+  font-weight: var(--font-weight-bold);
 }
