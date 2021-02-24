@@ -1,6 +1,9 @@
 import { useState } from "react"
+// import axios from "axios"
+
 import "./App.css"
-import { Button, Heading, List } from "./components"
+
+import { Button, DragDrop, Heading, List } from "./components"
 
 import { convertSheetToJson, readFileExcel } from "./service"
 
@@ -13,9 +16,28 @@ const App = () => {
     // console.log("handleClick", e)
     const inputFile = document.querySelector("#inputFile")
     inputFile.click()
-    inputFile.onChange = () => {
-      handleChange()
+    inputFile.onChange = () => handleChange()
+  }
+
+  const handleFile = (event) => {
+    const reader = readFileExcel(event)
+    if (!reader) {
+      return
     }
+    reader.addEventListener("loadend", async (e) => {
+      if (!e) {
+        return
+      }
+      const data = await convertSheetToJson(e)
+      console.log("readFile ", data)
+      if (!data) {
+        return
+      }
+      changeFile({ data })
+
+      // const response = axios.post("http://pythonanywhere.com")
+      // console.log(response)
+    })
   }
 
   const handleChange = (event) => {
@@ -23,24 +45,7 @@ const App = () => {
     if (!event) {
       return
     }
-
-    const reader = readFileExcel(event)
-    if (!reader) {
-      return
-    }
-
-    reader.addEventListener("loadend", async (e) => {
-      if (!e) {
-        return
-      }
-      // console.log("handleChange ", e)
-      const data = await convertSheetToJson(e)
-      console.log("readFile ", data)
-      if (!data) {
-        return
-      }
-      changeFile({ data })
-    })
+    handleFile(event)
   }
 
   return (
@@ -55,6 +60,7 @@ const App = () => {
         onChange={handleChange}
       />
       <Button type="primary" onClick={handleClick} text="Subir archivo" />
+      <DragDrop handleFile={handleFile} />
       <br />
 
       {file && <List data={file.data} />}

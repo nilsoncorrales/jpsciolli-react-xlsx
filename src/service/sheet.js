@@ -4,6 +4,7 @@ import * as ExcelJS from "exceljs"
 let IS_TYPE_XLSX = ""
 
 const getTypeFile = (extension) => {
+  console.log(extension)
   return extension.includes(".xlsx")
 }
 

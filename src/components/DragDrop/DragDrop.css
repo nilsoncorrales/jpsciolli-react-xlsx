@@ -1,0 +1,9 @@
+.DragDropFile {
+  border: 3px dotted #727272;
+  height: 300px;
+  width: 80%;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
