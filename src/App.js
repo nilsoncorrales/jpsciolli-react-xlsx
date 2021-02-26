@@ -9,6 +9,7 @@ import { convertSheetToJson, readFileExcel } from "./service"
 
 const App = () => {
   const [file, changeFile] = useState({ data: [] })
+  const [isLoading, changeLoading] = useState(false)
   const acceptFile = `.xlsx`
 
   const reducer = (state, action) => {
@@ -51,9 +52,9 @@ const App = () => {
       if (!data) {
         return
       }
-      axios.defaults.headers.post["Content-Type"] =
-        "application/x-www-form-urlencoded"
-      // https://scraping-jpsciolli-backend.herokuapp.com/api/news
+
+      // const API_URL = "https://scraping-jpsciolli-backend.herokuapp.com/api/news"
+      const API_URL = "http://127.0.0.1:8000/api/news"
 
       const instance = axios.create({
         responseType: "blob",
@@ -69,9 +70,9 @@ const App = () => {
           // Pragma: "public",
         },
       })
-
+      changeLoading(true)
       instance
-        .post("http://127.0.0.1:8000/api/news", { data: JSON.stringify(data) })
+        .post(API_URL, { data: JSON.stringify(data) })
         .then((response) => {
           console.log("handleFile ", response)
           if (response.status !== 200) {
@@ -88,35 +89,8 @@ const App = () => {
           document.body.appendChild(a) // we need to append the element to the dom -> otherwise it will not work in firefox
           a.click()
           a.remove()
+          changeLoading(false)
         })
-
-      // let filename
-      // fetch("http://127.0.0.1:8000/api/news", {
-      //   method: "POST",
-      //   mode: "cors",
-      //   body: JSON.stringify({ data: JSON.stringify(data) }),
-      //   headers: {
-      //     "Content-Type":
-      //       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8",
-      //   },
-      // })
-      //   .then((response) => {
-      //     console.log("handleFile ", response)
-      //     if (response.status !== 200) {
-      //       return
-      //     }
-      //     return response.blob()
-      //   })
-      //   .then((body) => {
-      //     console.log("handleFile ", body)
-      //     var url = window.URL.createObjectURL(body)
-      //     var a = document.createElement("a")
-      //     a.href = url
-      //     a.download = "resultado.xlsx"
-      //     document.body.appendChild(a) // we need to append the element to the dom -> otherwise it will not work in firefox
-      //     a.click()
-      //     a.remove()
-      //   })
 
       changeFile((prev) => ({ data: [...prev.data, ...data] }))
     })
@@ -143,6 +117,8 @@ const App = () => {
         onChange={handleChange}
       />
       <Button type="primary" onClick={handleClick} text="Subir archivo" />
+      <br></br>
+      <article>{isLoading ? <h3>Consumiendo API ...</h3> : ""}</article>
       <DragDrop data={data} dispatch={dispatch} handleFile={handleFile} />
       <ol className="dropped-files">
         {data.fileList.map((f) => {
@@ -151,7 +127,7 @@ const App = () => {
       </ol>
       <br />
 
-      {file && <List data={file.data} />}
+      {!isLoading && file && <List data={file.data} />}
     </div>
   )
 }
