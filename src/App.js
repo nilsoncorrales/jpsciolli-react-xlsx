@@ -1,5 +1,5 @@
 import { useReducer, useState } from "react"
-// import axios from "axios"
+import axios from "axios"
 
 import "./App.css"
 
@@ -47,19 +47,30 @@ const App = () => {
         return
       }
       const data = await convertSheetToJson(e)
-      // console.log("readFile ", data)
+      console.log("readFile ", data)
       if (!data) {
         return
       }
+      // axios.defaults.headers.post["Content-Type"] =
+      //   "application/x-www-form-urlencoded"
+      // https://scraping-jpsciolli-backend.herokuapp.com/api/news
+      // const response = await axios.post("http://127.0.0.1:8000/api/news", { data })
+      // const options = {
+      //   method: "POST",
+      //   headers: { "content-type": "application/x-www-form-urlencoded" },
+      //   data: JSON.stringify(data),
+      //   url: "http://127.0.0.1:8000/api/news",
+      // }
 
-      changeFile((prev) => {
-        // console.log("prev ", prev)
-        return { data: [...prev.data, ...data] }
-      })
-      // console.log("file ", file)
+      axios
+        .post("http://127.0.0.1:8000/api/news", {
+          data: JSON.stringify(data),
+        })
+        .then((response) => {
+          console.log("handleFile ", response)
+        })
 
-      // const response = axios.post("http://pythonanywhere.com")
-      // console.log(response)
+      changeFile((prev) => ({ data: [...prev.data, ...data] }))
     })
   }
 
