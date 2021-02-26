@@ -55,17 +55,12 @@ const App = () => {
       //   "application/x-www-form-urlencoded"
       // https://scraping-jpsciolli-backend.herokuapp.com/api/news
       // const response = await axios.post("http://127.0.0.1:8000/api/news", { data })
-      // const options = {
-      //   method: "POST",
-      //   headers: { "content-type": "application/x-www-form-urlencoded" },
-      //   data: JSON.stringify(data),
-      //   url: "http://127.0.0.1:8000/api/news",
-      // }
 
-      axios
-        .post("http://127.0.0.1:8000/api/news", {
-          data: JSON.stringify(data),
-        })
+      const instance = axios.create({ timeout: 600000 })
+      // instance.defaults.timeout = 56000
+
+      instance
+        .post("http://127.0.0.1:8000/api/news", { data: JSON.stringify(data) })
         .then((response) => {
           console.log("handleFile ", response)
         })
