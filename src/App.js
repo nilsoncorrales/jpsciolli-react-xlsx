@@ -53,18 +53,19 @@ const App = () => {
         return
       }
 
-      // const API_URL = "https://scraping-jpsciolli-backend.herokuapp.com/api/news"
-      const API_URL = "http://127.0.0.1:8000/api/news"
+      const API_URL = "https://scraping-jpsciolli-backend.herokuapp.com/api/news"
+      // const API_URL = "http://127.0.0.1:8000/api/news"
 
       const instance = axios.create({
         responseType: "blob",
         timeout: 600000,
         headers: {
-          // "Content-Description": "File Transfer",
-          // "Content-Transfer-Encoding": "Binary",
+          // "Access-Control-Allow-Origin": "*",
           "Content-Type":
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
           "Content-Disposition": "attachment; filename=file.xlsx",
+          // "Content-Description": "File Transfer",
+          // "Content-Transfer-Encoding": "Binary",
           // Expires: "0",
           // "Cache-Control": "must-revalidate",
           // Pragma: "public",
