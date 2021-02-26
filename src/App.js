@@ -51,19 +51,72 @@ const App = () => {
       if (!data) {
         return
       }
-      // axios.defaults.headers.post["Content-Type"] =
-      //   "application/x-www-form-urlencoded"
+      axios.defaults.headers.post["Content-Type"] =
+        "application/x-www-form-urlencoded"
       // https://scraping-jpsciolli-backend.herokuapp.com/api/news
-      // const response = await axios.post("http://127.0.0.1:8000/api/news", { data })
 
-      const instance = axios.create({ timeout: 600000 })
-      // instance.defaults.timeout = 56000
+      const instance = axios.create({
+        responseType: "blob",
+        timeout: 600000,
+        headers: {
+          // "Content-Description": "File Transfer",
+          // "Content-Transfer-Encoding": "Binary",
+          "Content-Type":
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "Content-Disposition": "attachment; filename=file.xlsx",
+          // Expires: "0",
+          // "Cache-Control": "must-revalidate",
+          // Pragma: "public",
+        },
+      })
 
       instance
         .post("http://127.0.0.1:8000/api/news", { data: JSON.stringify(data) })
         .then((response) => {
           console.log("handleFile ", response)
+          if (response.status !== 200) {
+            return
+          }
+          return response
         })
+        .then(({ data }) => {
+          console.log("handleFile ", data)
+          var url = window.URL.createObjectURL(data)
+          var a = document.createElement("a")
+          a.href = url
+          a.download = "filename.xlsx"
+          document.body.appendChild(a) // we need to append the element to the dom -> otherwise it will not work in firefox
+          a.click()
+          a.remove()
+        })
+
+      // let filename
+      // fetch("http://127.0.0.1:8000/api/news", {
+      //   method: "POST",
+      //   mode: "cors",
+      //   body: JSON.stringify({ data: JSON.stringify(data) }),
+      //   headers: {
+      //     "Content-Type":
+      //       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8",
+      //   },
+      // })
+      //   .then((response) => {
+      //     console.log("handleFile ", response)
+      //     if (response.status !== 200) {
+      //       return
+      //     }
+      //     return response.blob()
+      //   })
+      //   .then((body) => {
+      //     console.log("handleFile ", body)
+      //     var url = window.URL.createObjectURL(body)
+      //     var a = document.createElement("a")
+      //     a.href = url
+      //     a.download = "resultado.xlsx"
+      //     document.body.appendChild(a) // we need to append the element to the dom -> otherwise it will not work in firefox
+      //     a.click()
+      //     a.remove()
+      //   })
 
       changeFile((prev) => ({ data: [...prev.data, ...data] }))
     })
