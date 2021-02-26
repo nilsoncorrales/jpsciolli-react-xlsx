@@ -38,7 +38,8 @@ const App = () => {
   }
 
   const handleFile = (excel) => {
-    // console.log(excel)
+    console.log(excel)
+    const { name } = excel
     const reader = readFileExcel(excel)
     if (!reader) {
       return
@@ -60,15 +61,10 @@ const App = () => {
         responseType: "blob",
         timeout: 600000,
         headers: {
-          // "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": "*",
           "Content-Type":
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
           "Content-Disposition": "attachment; filename=file.xlsx",
-          // "Content-Description": "File Transfer",
-          // "Content-Transfer-Encoding": "Binary",
-          // Expires: "0",
-          // "Cache-Control": "must-revalidate",
-          // Pragma: "public",
         },
       })
       changeLoading(true)
@@ -86,7 +82,7 @@ const App = () => {
           var url = window.URL.createObjectURL(data)
           var a = document.createElement("a")
           a.href = url
-          a.download = "resultado.xlsx"
+          a.download = `SC_${name}`
           document.body.appendChild(a) // we need to append the element to the dom -> otherwise it will not work in firefox
           a.click()
           a.remove()
