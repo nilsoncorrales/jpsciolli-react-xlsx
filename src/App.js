@@ -84,7 +84,7 @@ const App = () => {
           var url = window.URL.createObjectURL(data)
           var a = document.createElement("a")
           a.href = url
-          a.download = "filename.xlsx"
+          a.download = "resultado.xlsx"
           document.body.appendChild(a) // we need to append the element to the dom -> otherwise it will not work in firefox
           a.click()
           a.remove()
